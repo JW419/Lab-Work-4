@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,14 +11,18 @@ public class GameManager : MonoBehaviour
     public GameObject meteorPrefab;
     public GameObject bigMeteorPrefab;
     public bool gameOver = false;
+    public CinemachineVirtualCamera virtualCamera;
 
     public int meteorCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(playerPrefab, transform.position, Quaternion.identity);
+        virtualCamera = GameObject.Find("Ship Camera").GetComponent<CinemachineVirtualCamera>();
         InvokeRepeating("SpawnMeteor", 1f, 2f);
+
+        SpawnPlayer();
+
     }
 
     // Update is called once per frame
@@ -47,5 +53,10 @@ public class GameManager : MonoBehaviour
     {
         meteorCount = 0;
         Instantiate(bigMeteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.identity);
+    }
+    void SpawnPlayer()
+    {
+        Instantiate(playerPrefab, transform.position, Quaternion.identity);
+        virtualCamera.m_Follow = GameObject.Find("Player(Clone)").transform;
     }
 }
