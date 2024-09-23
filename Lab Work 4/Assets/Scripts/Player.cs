@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameObject laserPrefab;
-
-    private float speed = 6f;
+  //  public GameObject laserPrefab;
+    
+    public float speed = 6f;
     private float horizontalScreenLimit = 10f;
     private float verticalScreenLimit = 6f;
-    private bool canShoot = true;
+  //  private bool canShoot = true;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        audioSource = GetComponent<AudioSource>();
+   }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-        Shooting();
+     //   Shooting();
     }
 
     void Movement()
@@ -37,19 +38,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Shooting()
+ //   void Shooting()
+ //   {
+   //     if (Input.GetKeyDown(KeyCode.Space))
+     //   {
+  //          Instantiate(laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            
+          //  canShoot = false;
+     //       StartCoroutine("Cooldown");
+    //    PlaySound("Laser");
+        //}
+   // }
+    
+    public void PlaySound(AudioClip clip)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
-        {
-            Instantiate(laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-            canShoot = false;
-            StartCoroutine("Cooldown");
-        }
-    }
+       audioSource.PlayOneShot(clip);
+   }
 
-    private IEnumerator Cooldown()
-    {
-        yield return new WaitForSeconds(1f);
-        canShoot = true;
-    }
+ //   private IEnumerator Cooldown()
+ //   {
+  //      yield return new WaitForSeconds(1f);
+  //      canShoot = true;
+  //  }
 }

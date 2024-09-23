@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
-    
+    public AudioSource meteorSource;
     // Start is called before the first frame update
     void Start()
     {
-        
+        meteorSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,6 +24,7 @@ public class Meteor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D whatIHit)
     {
+        meteorSource.Play();
         if (whatIHit.tag == "Player")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().gameOver = true;
@@ -31,9 +32,12 @@ public class Meteor : MonoBehaviour
             Destroy(this.gameObject);
         } else if (whatIHit.tag == "Laser")
         {
+
             GameObject.Find("GameManager").GetComponent<GameManager>().meteorCount++;
             Destroy(whatIHit.gameObject);
             Destroy(this.gameObject);
         }
+
     }
+
 }
